@@ -26,7 +26,7 @@ export default {
         completed: false,
       };
 
-      this.$emit("add-boodschap", newBoodschap);
+      this.$store.commit("addBoodschap", newBoodschap);
 
       this.title = "";
     },

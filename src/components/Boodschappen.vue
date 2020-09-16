@@ -1,6 +1,6 @@
 <template>
   <div>
-    <draggable :list="boodschappen" group="people" @start="drag=true" @end="drag=false">
+    <draggable v-model="unchecked" group="people" @start="drag=true" @end="drag=false">
       <div v-for="boodschap in unchecked" :key="boodschap.id">
         <BoodschapItem
           v-bind:boodschap="boodschap"
@@ -31,12 +31,18 @@ export default {
   },
   props: ["boodschappen"],
   computed: {
-    unchecked: function () {
-      return this.boodschappen.filter((boodschap) => !boodschap.checked);
+    unchecked: {
+      get() {
+        return this.$store.state.boodschappen.filter((boodschap) => !boodschap.completed);
+      },
+      set(value) {
+          this.$store.commit("updateList", value)
+      }
     },
-    checked: function () {
-        console.log(this.boodschappen)
-      return this.boodschappen.filter((boodschap) => boodschap.checked);
+    checked: {
+      get() {
+        return this.$store.state.boodschappen.filter((boodschap) => boodschap.completed);
+      },
     },
   },
   methods: {

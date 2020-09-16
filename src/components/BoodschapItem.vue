@@ -1,7 +1,7 @@
 <template>
   <div class="boodschap-item" v-bind:class="{'is-complete':boodschap.completed}">
     <p>
-      <input type="checkbox" v-on:change="markComplete" />
+      <input type="checkbox" v-on:change="markComplete(boodschap.id)" />
       {{boodschap.title}}
       <button @click="$emit('del-boodschap', boodschap.id)" class="del">x</button>
     </p>
@@ -11,13 +11,12 @@
 <script>
 export default {
   name: "BoodschapItem",
-  props: ["boodschap"],
   methods: {
-    markComplete() {
-        console.log("MARK COMPLETE")
-      this.boodschap.completed = !this.boodschap.completed;
-    },
+      markComplete: function(id) {
+          this.$store.commit("markComplete", id)
+      }
   },
+  props: ["boodschap"],
 };
 </script>
 
